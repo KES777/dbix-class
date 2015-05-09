@@ -210,9 +210,6 @@ has config => (
 sub _build_config {
   my ($self) = @_;
 
-  try { require Config::Any }
-    catch { die ("Config::Any is required to parse the config file.\n") };
-
   my $cfg = Config::Any->load_files ( {files => [$self->config_file], use_ext =>1, flatten_to_hash=>1});
 
   # just grab the config from the config file
