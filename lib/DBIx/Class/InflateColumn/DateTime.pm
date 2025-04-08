@@ -246,6 +246,12 @@ sub _post_inflate_datetime {
 
   $dt->set_time_zone($info->{timezone}) if defined $info->{timezone};
   $dt->set_locale($info->{locale}) if defined $info->{locale};
+  my $f =  defined $info->{formatter}  &&  $info->{formatter}
+    || $ENV{DBIC_AUTOSET_DATETIME_FORMATTER} && 'auto';
+  if( $f ) {
+    $f =  $f eq 'auto' ? $self->_datetime_parser : $f;
+    $dt->set_formatter( $f );
+  }
 
   return $dt;
 }
